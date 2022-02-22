@@ -1,15 +1,16 @@
 import Head from 'next/head';
 import Banner from '../components/banner';
+import Navbar from '../components/navbar';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>Create Next App</title>
+				<title>Nextflix</title>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<h1>Nextflix</h1>
+			<Navbar username='maninaik@naik.com' />
 
 			<Banner
 				title='3 idiots'
