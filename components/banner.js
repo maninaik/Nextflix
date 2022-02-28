@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../styles/Banner.module.css';
+import styles from '../styles/banner.module.css';
 
 export default function Banner(props) {
 	const { title, subTitle, imgUrl } = props;

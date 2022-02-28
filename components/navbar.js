@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import styles from '../styles/Navbar.module.css';
+import styles from '../styles/navbar.module.css';
 
 const Navbar = (props) => {
 	const { username } = props;
@@ -25,12 +25,14 @@ const Navbar = (props) => {
 		<div className={styles.container}>
 			<div className={styles.wrapper}>
 				<a className={styles.logoLink} href=''>
-					<Image
-						src='/static/nextflix.svg'
-						width='120px'
-						height='60px'
-						alt='Nextflix logo'
-					/>
+					<div className={styles.logoWrapper}>
+						<Image
+							src='/static/nextflix.svg'
+							width='120px'
+							height='60px'
+							alt='Nextflix logo'
+						/>
+					</div>
 				</a>
 				<ul className={styles.navItems}>
 					<li onClick={handleOnClickHome} className={styles.navItem}>
