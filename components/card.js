@@ -8,7 +8,7 @@ const Card = (props) => {
 	const {
 		imgUrl = '/static/movie-placeholder.png',
 		size = 'medium',
-		key,
+		id,
 	} = props;
 
 	const [imgSrc, setImgSrc] = useState(imgUrl);
@@ -22,7 +22,7 @@ const Card = (props) => {
 		small: styles.smItem,
 	};
 
-	const scale = key === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
+	const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
 	return (
 		<div className={styles.container}>
 			<motion.div

@@ -8,7 +8,7 @@ const SectionCards = ({ title, videos = [], size }) => {
 			<h2 className={styles.title}>{title}</h2>
 			<div className={styles.cardWrapper}>
 				{videos.map((video, index) => (
-					<Card key={index} imgUrl={video.imgUrl} size={size} />
+					<Card key={video.id} imgUrl={video.imgUrl} size={size} />
 				))}
 			</div>
 		</section>

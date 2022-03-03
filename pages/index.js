@@ -4,7 +4,6 @@ import Navbar from '../components/navbar';
 import styles from '../styles/Home.module.css';
 import SectionCards from '../components/SectionCards';
 import { getVideosByPopularity, getVideosBySearchQuery } from '../lib/videos';
-
 export async function getServerSideProps() {
 	const disneyVideos = await getVideosBySearchQuery('disney trailer');
 	const productivityVideos = await getVideosBySearchQuery('productivity');
@@ -35,7 +34,7 @@ export default function Home({
 			</Head>
 
 			<div className={styles.main}>
-				<Navbar username='maninaik@naik.com' />
+				<Navbar />
 
 				<Banner
 					title='3 idiots'
