@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from '../styles/card.module.css';
 import { motion } from 'framer-motion';
 import classnames from 'classnames';
+import Link from 'next/link';
 
 const Card = (props) => {
 	const {
@@ -24,19 +25,21 @@ const Card = (props) => {
 
 	const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
 	return (
-		<div className={styles.container}>
-			<motion.div
-				whileHover={scale}
-				className={classnames(styles.imgMotionWrapper, classMap[size])}>
-				<Image
-					className={styles.cardImg}
-					src={imgSrc}
-					alt='image'
-					layout='fill'
-					onError={handleOnError}
-				/>
-			</motion.div>
-		</div>
+		<Link href={`/video/${id}`}>
+			<div className={styles.container}>
+				<motion.div
+					whileHover={scale}
+					className={classnames(styles.imgMotionWrapper, classMap[size])}>
+					<Image
+						className={styles.cardImg}
+						src={imgSrc}
+						alt='image'
+						layout='fill'
+						onError={handleOnError}
+					/>
+				</motion.div>
+			</div>
+		</Link>
 	);
 };
 

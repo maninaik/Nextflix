@@ -3,19 +3,26 @@ import Banner from '../components/banner';
 import Navbar from '../components/navbar';
 import styles from '../styles/Home.module.css';
 import SectionCards from '../components/SectionCards';
-import { getVideosByPopularity, getVideosBySearchQuery } from '../lib/videos';
+import { startFetchMyQuery } from '../lib/db/hasura';
+import {
+	getVideosById,
+	getVideosByPopularity,
+	getVideosBySearchQuery,
+} from '../lib/videos';
 export async function getServerSideProps() {
 	const disneyVideos = await getVideosBySearchQuery('disney trailer');
 	const productivityVideos = await getVideosBySearchQuery('productivity');
 	const travelVideos = await getVideosBySearchQuery('travel');
 	const popularVideos = await getVideosByPopularity();
-
+	const bannerVideoArr = await getVideosById('CaimKeDcudo');
+	const bannerVideo = bannerVideoArr.length > 0 ? bannerVideoArr[0] : {};
 	return {
 		props: {
 			disneyVideos,
 			productivityVideos,
 			travelVideos,
 			popularVideos,
+			bannerVideo,
 		},
 	};
 }
@@ -25,7 +32,9 @@ export default function Home({
 	productivityVideos,
 	travelVideos,
 	popularVideos,
+	bannerVideo,
 }) {
+	startFetchMyQuery();
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -37,9 +46,10 @@ export default function Home({
 				<Navbar />
 
 				<Banner
-					title='3 idiots'
-					subTitle='A movie on engineering students'
+					title={bannerVideo.title || ''}
+					subTitle=''
 					imgUrl='/static/banner-image.jpg'
+					videoId='CaimKeDcudo'
 				/>
 				<div className={styles.sectionWrapper}>
 					<SectionCards title='Disney' videos={disneyVideos} size='large' />

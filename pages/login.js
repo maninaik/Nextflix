@@ -77,7 +77,10 @@ export default function login() {
 					/>
 
 					<p className={styles.userMsg}>{userMessage}</p>
-					<button className={styles.loginBtn} onClick={handleLoginEmail}>
+					<button
+						type='submit'
+						className={styles.loginBtn}
+						onClick={handleLoginEmail}>
 						{isLoading ? 'Loading...' : 'Sign In'}
 					</button>
 				</div>
