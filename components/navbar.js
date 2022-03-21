@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { magic } from '../lib/magic-link';
+import { magic } from '../lib/magic-client';
 import styles from '../styles/navbar.module.css';
 
 const Navbar = () => {
@@ -36,7 +36,6 @@ const Navbar = () => {
 	const handleSignOut = async (e) => {
 		try {
 			await magic.user.logout();
-			console.log(await magic.user.isLoggedIn());
 			router.push('/login');
 		} catch (err) {
 			console.error('Something went wrong logging in', err);

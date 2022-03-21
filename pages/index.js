@@ -3,7 +3,6 @@ import Banner from '../components/banner';
 import Navbar from '../components/navbar';
 import styles from '../styles/Home.module.css';
 import SectionCards from '../components/SectionCards';
-import { startFetchMyQuery } from '../lib/db/hasura';
 import {
 	getVideosById,
 	getVideosByPopularity,
@@ -34,7 +33,6 @@ export default function Home({
 	popularVideos,
 	bannerVideo,
 }) {
-	startFetchMyQuery();
 	return (
 		<div className={styles.container}>
 			<Head>
