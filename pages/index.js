@@ -7,14 +7,24 @@ import {
 	getVideosById,
 	getVideosByPopularity,
 	getVideosBySearchQuery,
+	getWatchItAgainVideos,
 } from '../lib/videos';
-export async function getServerSideProps() {
+import { verifyToken } from '../lib/utils';
+
+export async function getServerSideProps({ req }) {
 	const disneyVideos = await getVideosBySearchQuery('disney trailer');
 	const productivityVideos = await getVideosBySearchQuery('productivity');
 	const travelVideos = await getVideosBySearchQuery('travel');
 	const popularVideos = await getVideosByPopularity();
 	const bannerVideoArr = await getVideosById('CaimKeDcudo');
 	const bannerVideo = bannerVideoArr.length > 0 ? bannerVideoArr[0] : {};
+
+	const token = req.cookies.token || null;
+	const userId = verifyToken(token);
+	if (!userId)
+		return { props: {}, redirect: { destination: '/login', permanent: false } };
+	const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
+
 	return {
 		props: {
 			disneyVideos,
@@ -22,6 +32,7 @@ export async function getServerSideProps() {
 			travelVideos,
 			popularVideos,
 			bannerVideo,
+			watchItAgainVideos,
 		},
 	};
 }
@@ -32,6 +43,7 @@ export default function Home({
 	travelVideos,
 	popularVideos,
 	bannerVideo,
+	watchItAgainVideos,
 }) {
 	return (
 		<div className={styles.container}>
@@ -51,6 +63,11 @@ export default function Home({
 				/>
 				<div className={styles.sectionWrapper}>
 					<SectionCards title='Disney' videos={disneyVideos} size='large' />
+					<SectionCards
+						title='Watch it Again'
+						videos={watchItAgainVideos}
+						size='small'
+					/>
 					<SectionCards title='Travel' videos={travelVideos} size='small' />
 					<SectionCards
 						title='Productivity'

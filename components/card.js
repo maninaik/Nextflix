@@ -10,6 +10,7 @@ const Card = (props) => {
 		imgUrl = '/static/movie-placeholder.png',
 		size = 'medium',
 		id,
+		shouldScale = true,
 	} = props;
 
 	const [imgSrc, setImgSrc] = useState(imgUrl);
@@ -24,11 +25,14 @@ const Card = (props) => {
 	};
 
 	const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
+	const shouldHover = shouldScale && {
+		whileHover: { ...scale },
+	};
 	return (
 		<Link href={`/video/${id}`}>
 			<div className={styles.container}>
 				<motion.div
-					whileHover={scale}
+					{...shouldHover}
 					className={classnames(styles.imgMotionWrapper, classMap[size])}>
 					<Image
 						className={styles.cardImg}

@@ -3,12 +3,15 @@ import styles from '../../styles/video.module.css';
 import NavBar from '../../components/navbar';
 import clsx from 'classnames';
 import { getVideosById } from '../../lib/videos';
+import Like from '../../components/icons/like-icon';
+import DisLike from '../../components/icons/dislike-icon';
+import { useState, useEffect } from 'react';
 
 Modal.setAppElement('#__next');
 
 export async function getStaticProps({ params }) {
 	const videoId = params.videoId;
-	const videoData = await getVideosById(params.videoId);
+	const videoData = await getVideosById(videoId);
 
 	return {
 		props: { video: videoData.length > 0 ? videoData[0] : {} },
@@ -28,10 +31,65 @@ export function getStaticPaths() {
 		fallback: 'blocking',
 	};
 }
+
 export default function Video({ video }) {
 	const videoId = video.videoId;
 
 	const { title, publishTime, description, channelTitle, viewCount } = video;
+
+	const [toggleLike, setToggleLike] = useState(false);
+	const [toggleDislike, setToggleDislike] = useState(false);
+
+	useEffect(() => {
+		async function getVideoData() {
+			const response = await fetch(`/api/stats?videoId=${videoId}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const videoDetails = await response.json();
+			const { favourited } = videoDetails;
+			if (favourited) {
+				setToggleLike(true);
+			} else {
+				setToggleDislike(true);
+			}
+		}
+		getVideoData();
+	}, []);
+
+	const rateVideo = async (favourited) => {
+		return await fetch('/api/stats', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				videoId,
+				favourited,
+			}),
+		});
+	};
+
+	const handleToggleLike = async () => {
+		const val = !toggleLike;
+		setToggleLike((prev) => !prev);
+		setToggleDislike(toggleLike);
+
+		const favourited = val ? 1 : 0;
+		const response = await rateVideo(favourited);
+		console.log('data', await response.json());
+	};
+	const handleToggleDislike = async () => {
+		const val = !toggleDislike;
+		setToggleDislike((prev) => !prev);
+		setToggleLike(toggleDislike);
+
+		const favourited = val ? 0 : 1;
+		const response = await rateVideo(favourited);
+		console.log('data', await response.json());
+	};
 
 	return (
 		<div className={styles.container}>
@@ -48,7 +106,22 @@ export default function Video({ video }) {
 					width='100%'
 					height='360'
 					src={`https://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://nextflix.com&controls=0`}
-					frameborder='0'></iframe>
+					frameBorder='0'></iframe>
+				<div className={styles.likeDislikeBtnWrapper}>
+					<div className={styles.likeBtnWrapper}>
+						<button onClick={handleToggleLike}>
+							<div className={styles.btnWrapper}>
+								<Like selected={toggleLike} />
+							</div>
+						</button>
+					</div>
+
+					<button onClick={handleToggleDislike}>
+						<div className={styles.btnWrapper}>
+							<DisLike selected={toggleDislike} />
+						</div>
+					</button>
+				</div>
 
 				<div className={styles.modalBody}>
 					<div className={styles.modalBodyContent}>
