@@ -7,8 +7,7 @@ import { getFavouritedVideos } from '../../lib/videos';
 export async function getServerSideProps({ req }) {
 	const token = req.cookies.token || null;
 	const userId = verifyToken(token);
-	if (!userId)
-		return { props: {}, redirect: { destination: '/login', permanent: false } };
+
 	const favouritedVideos = await getFavouritedVideos(userId, token);
 	return {
 		props: {

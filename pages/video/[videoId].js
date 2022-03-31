@@ -79,7 +79,6 @@ export default function Video({ video }) {
 
 		const favourited = val ? 1 : 0;
 		const response = await rateVideo(favourited);
-		console.log('data', await response.json());
 	};
 	const handleToggleDislike = async () => {
 		const val = !toggleDislike;
@@ -88,7 +87,6 @@ export default function Video({ video }) {
 
 		const favourited = val ? 0 : 1;
 		const response = await rateVideo(favourited);
-		console.log('data', await response.json());
 	};
 
 	return (

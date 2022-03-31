@@ -6,31 +6,21 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const loadPage = () => {
 		setIsLoading(false);
 	};
 
 	useEffect(() => {
-		async function checkLogin() {
-			const isLoggedIn = await magic.user.isLoggedIn();
-			router.events.on('routeChangeComplete', loadPage);
-			router.events.on('routeChangeError', loadPage);
-
-			if (isLoggedIn) {
-				router.push('/');
-			} else {
-				router.push('/login');
-			}
-		}
-		checkLogin();
+		router.events.on('routeChangeComplete', loadPage);
+		router.events.on('routeChangeError', loadPage);
 
 		return () => {
 			router.events.off('routeChangeComplete', loadPage);
 			router.events.off('routeChangeError', loadPage);
 		};
-	}, []);
+	}, [router]);
 
 	return isLoading ? <Loading /> : <Component {...pageProps} />;
 }

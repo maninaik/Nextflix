@@ -21,8 +21,7 @@ export async function getServerSideProps({ req }) {
 
 	const token = req.cookies.token || null;
 	const userId = verifyToken(token);
-	if (!userId)
-		return { props: {}, redirect: { destination: '/login', permanent: false } };
+
 	const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
 
 	return {

@@ -34,11 +34,18 @@ const Navbar = () => {
 	};
 
 	const handleSignOut = async (e) => {
+		e.preventDefault();
 		try {
+			const response = await fetch('/api/logout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const res = await response.json();
 			await magic.user.logout();
-			router.push('/login');
 		} catch (err) {
-			console.error('Something went wrong logging in', err);
+			console.error('Something went wrong logging out', err);
 			router.push('/login');
 		}
 	};
