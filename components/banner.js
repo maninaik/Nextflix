@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../styles/banner.module.css';
+import styles from '../styles/Banner.module.css';
 import { useRouter } from 'next/router';
 
 export default function Banner(props) {
