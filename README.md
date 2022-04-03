@@ -2,7 +2,7 @@
 
 ## A netflix clone made using NextJS
 
-For login it uses magic and user data is stored in Hasura graphQL servers.
+It uses youtube API to show videos, videos are not stored in the server. For login it uses magic and user data is stored in Hasura graphQL servers.
 
 ### Environment Variables 
 1. YOUTUBE_API_KEY
