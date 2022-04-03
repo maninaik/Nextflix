@@ -12,3 +12,4 @@ It uses youtube API to show videos, videos are not stored in the server. For log
 5. MAGIC_SECRET_API_KEY
 6. JWT_SECRET
 
+URL - nextflix-mani.vercel.app
