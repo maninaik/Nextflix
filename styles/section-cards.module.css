@@ -16,8 +16,8 @@
 	padding-bottom: 1.5rem;
 	margin-top: 1.5rem /* 24px */;
 	margin-right: 0.75rem /* 12px */;
-	overflow-x: scroll;
 	overflow-y: hidden;
+	position: relative;
 }
 
 .wrap {
@@ -34,6 +34,53 @@
 
 .cardImg:hover {
 	z-index: 50;
+}
+
+.slider {
+	display: flex;
+	overflow-x: scroll;
+}
+
+.leftSlide,
+.rightSlide {
+	background: rgba(20, 20, 20, 0.5);
+	position: absolute;
+	width: 4%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	bottom: 0;
+	z-index: 100;
+	transition: all ease-in 0.1s;
+	cursor: pointer;
+}
+
+.leftSlide:hover,
+.rightSlide:hover {
+	background-color: rgba(20, 20, 20, 0.7);
+}
+
+.leftSlide {
+	left: 0;
+}
+
+.rightSlide {
+	right: 0;
+}
+
+.leftSlide b,
+.rightSlide b {
+	transform: scale(1.5);
+	color: #fff;
+}
+
+.leftSlide b::after {
+	content: '\e5cb';
+}
+
+.rightSlide b:before {
+	content: '\e409';
 }
 
 @media (min-width: 768px) {
